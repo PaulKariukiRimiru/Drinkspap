@@ -1,31 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/container"
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_with_view_pager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityHome"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/app_bar_home">
+
+    <com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
+        android:id="@+id/bnve"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        app:itemIconTint="@color/selector_item_gray_color"
+        app:itemTextColor="@color/selector_item_gray_color"
+        app:menu="@menu/navigation" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="com.example.mike.drinkspap.ActivityHome"
-        tools:showIn="@layout/app_bar_home"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:weightSum="1">
+        android:layout_above="@id/bnve" />
 
-
-        <FrameLayout
-            android:id="@+id/content"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.95"
-            >
-        </FrameLayout>
-
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/windowBackground"
-            app:menu="@menu/navigation"
-            android:layout_weight="0.05"
-            />
-</LinearLayout>
+</RelativeLayout>

@@ -7,18 +7,27 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.mike.drinkspap.Fragments.FavouritesFragment;
 import com.example.mike.drinkspap.Fragments.HomeFragment;
 import com.example.mike.drinkspap.Fragments.DeliveriesFragment;
+import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ActivityHome extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -26,32 +35,14 @@ public class ActivityHome extends AppCompatActivity implements NavigationView.On
     Fragment fragment;
     FragmentManager fragmentManager;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private static final String TAG = ActivityHome.class.getSimpleName();
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            fragmentManager = getSupportFragmentManager();
-            fragment = HomeFragment.newInstance("test", "test");
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.add(R.id.container,fragment).commit();
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    fragment = HomeFragment.newInstance("test", "test");
-                    break;
-                case R.id.navigation_favorites:
-                    fragment = FavouritesFragment.newInstance("test", "test");
-                    break;
-                case R.id.navigation_whatshot:
-                    fragment = DeliveriesFragment.newInstance("test", "test");
-                    break;
-            }
-            FragmentTransaction transaction1 = fragmentManager.beginTransaction();
-            transaction1.replace(R.id.container,fragment).commit();
-            return true;
-        }
+    // collections
+    private SparseIntArray items;// used for change ViewPager selected item
+    private List<Fragment> fragments = new ArrayList<>();// used for ViewPager adapter
 
-    };
+    BottomNavigationViewEx navigationViewEx;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,19 +51,39 @@ public class ActivityHome extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        fragments.add(HomeFragment.newInstance("test", "test"));
+        fragments.add(FavouritesFragment.newInstance("test", "test"));
+        fragments.add(DeliveriesFragment.newInstance("test", "test"));
+
+        items = new SparseIntArray();
+        items.put(R.id.navigation_home,0);
+        items.put(R.id.navigation_favorites,1);
+        items.put(R.id.navigation_whatshot,2);
+
+        final ViewPager pager = (ViewPager) findViewById(R.id.vp);
+        navigationViewEx = (BottomNavigationViewEx) findViewById(R.id.bnve);
+        pager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),fragments));
+        navigationViewEx.setupWithViewPager(pager,true);
+
+        navigationViewEx.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            private int previousPosition = -1;
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int position = items.get(item.getItemId());
+                if (previousPosition != position) {
+                    // only set item when item changed
+                    previousPosition = position;
+                    Log.i(TAG, "-----bnve-------- previous item:" + navigationViewEx.getCurrentItem() + " current item:" + position + " ------------------");
+                    pager.setCurrentItem(position);
+                }
+                return true;            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
-        fragmentManager = getSupportFragmentManager();
-        fragment = HomeFragment.newInstance("test", "test");
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.container,fragment).commit();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -137,5 +148,23 @@ public class ActivityHome extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    private class ViewPagerAdapter extends FragmentPagerAdapter{
+
+        List<Fragment> fragmentList;
+        public ViewPagerAdapter(FragmentManager manager, List<Fragment> fragmentList){
+            super(manager);
+            this.fragmentList = fragmentList;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragmentList.size();
+        }
+    }
 
 }
