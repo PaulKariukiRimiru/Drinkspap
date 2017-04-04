@@ -1,11 +1,12 @@
 package com.example.mike.drinkspap.Fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +17,13 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
-import com.example.mike.drinkspap.ActivityHome;
 import com.example.mike.drinkspap.Adapters.MainAdapter;
 import com.example.mike.drinkspap.Custom.SliderLayout;
+import com.example.mike.drinkspap.Interfaces.NavigationInterface;
 import com.example.mike.drinkspap.Pojo.CategoryObject;
 import com.example.mike.drinkspap.Pojo.DrinksObject;
-import com.example.mike.drinkspap.Pojo.MainDrinksObject;
 import com.example.mike.drinkspap.Pojo.MainObject;
+import com.example.mike.drinkspap.Pojo.TiltleObject;
 import com.example.mike.drinkspap.R;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment implements ViewPagerEx.OnPageChangeListener, BaseSliderView.OnSliderClickListener {
+public class HomeFragment extends Fragment implements ViewPagerEx.OnPageChangeListener, BaseSliderView.OnSliderClickListener, NavigationInterface {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -70,6 +71,7 @@ public class HomeFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("HomeFragment","onCreate()");
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -80,10 +82,11 @@ public class HomeFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.d("HomeFragment","onCreateView()");
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.mainView);
-        recyclerView.setAdapter(new MainAdapter(getContext(),initializeData()));
+        recyclerView.setAdapter(new MainAdapter(getContext(),initializeData(), this));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         initializeLayout(view);
         return view;
@@ -91,30 +94,28 @@ public class HomeFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
 
     private List<MainObject> initializeData(){
         List<MainObject> mainObjects = new ArrayList<>();
+        Log.d("HomeFragment","initializeData()");
+        for (int i = 0; i <= 5; i++) {
+            TiltleObject tiltleObject = new TiltleObject();
+            tiltleObject.setTitle("test title");
+            List<DrinksObject> drinksObjectList = new ArrayList<>();
+            for (int v = 0; v <= 5; v++){
+                DrinksObject drinksObject = new DrinksObject();
+                drinksObject.setName("Test name");
+                drinksObject.setType("Test type");
+                drinksObject.setPrice("1000");
+                drinksObjectList.add(drinksObject);
+            }
 
-        CategoryObject categoryObject = new CategoryObject();
-        categoryObject.setTitle("Test Title");
-        List<DrinksObject> objects = new ArrayList<>();
-        for (int i = 0; i <= 5; i++ ){
-            DrinksObject drinksObject = new DrinksObject();
-            drinksObject.setName("Test name");
-            drinksObject.setPrice("1000");
-            drinksObject.setType("Test type");
-
-            objects.add(drinksObject);
+            tiltleObject.setDrinksObjects(drinksObjectList);
+            mainObjects.add(tiltleObject);
         }
-        categoryObject.setData(objects);
-
-        MainDrinksObject mainDrinksObject = new MainDrinksObject();
-        mainDrinksObject.setMainObjects(objects);
-
-        mainObjects.add(categoryObject);
-        mainObjects.add(mainDrinksObject);
-
         return mainObjects;
     }
 
     private void initializeLayout(View view) {
+        Log.d("HomeFragment","initializeLayout()");
+
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         String[] colors = getResources().getStringArray(R.array.colorList);
 
@@ -170,5 +171,12 @@ public class HomeFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public void fragmentNavigation(Fragment fragment) {
+        FragmentManager manager = getFragmentManager();
+        ProductFragment fragment1 = (ProductFragment) fragment;
+        fragment1.show(manager,"Product");
     }
 }

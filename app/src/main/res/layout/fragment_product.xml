@@ -1,0 +1,96 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.mike.drinkspap.Fragments.ProductFragment">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="info.androidhive.materialdesign.activity.FriendsFragment">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#f0f1f5"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/tester"
+                android:scaleType="centerCrop"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#60000000">
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="bottom"
+                >
+                <TextView
+                    android:id="@+id/text11"
+
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:layout_gravity="bottom"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colortext"
+                    android:text="Test Drink Product " />
+
+
+                <TextView
+                    android:id="@+id/text"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18dp"
+                    android:layout_gravity="bottom"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colortext"
+                    android:text="Sample drink made with delicate and with alot of gratitude by the msafiri crew :)" />
+
+
+                <com.andexert.library.RippleView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:rv_color="@color/colorPrimary"
+                    app:rv_centered="true"
+                    app:rv_rippleDuration="150"
+                    app:rv_zoom="true"
+                    app:rv_zoomDuration="250"
+                    android:id="@+id/ripMainItem"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="25dp"
+                    android:layout_marginTop="15dp">
+                <Button
+                    android:id="@+id/btnSimpleSnackbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ADD TO CART - ksh. 2000"
+                    android:layout_gravity="bottom"
+                    android:elevation="6dp"
+                    android:textSize="20sp"
+                    android:background="@drawable/button_selector"
+                    android:textColor="@color/colortext"/>
+                </com.andexert.library.RippleView>
+            </LinearLayout>
+
+
+        </FrameLayout>
+    </LinearLayout>
+
+</FrameLayout>

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mike.drinkspap.Adapters.MainAdapter;
+import com.example.mike.drinkspap.Interfaces.NavigationInterface;
 import com.example.mike.drinkspap.Pojo.CategoryObject;
 import com.example.mike.drinkspap.Pojo.DrinksObject;
 import com.example.mike.drinkspap.Pojo.MainObject;
@@ -27,10 +28,12 @@ public class CategoriesDelegate extends AdapterDelegate<List<MainObject>> {
 
     private final LayoutInflater inflater;
     private final Context context;
+    private final NavigationInterface navigationInterface;
 
-    public CategoriesDelegate(Context context){
+    public CategoriesDelegate(Context context, NavigationInterface navigationInterface){
         inflater = LayoutInflater.from(context);
         this.context = context;
+        this.navigationInterface = navigationInterface;
     }
 
 
@@ -59,7 +62,7 @@ public class CategoriesDelegate extends AdapterDelegate<List<MainObject>> {
         }
 
 
-        MainAdapter adapter = new MainAdapter(context, drinksObjects);
+        MainAdapter adapter = new MainAdapter(context, drinksObjects,navigationInterface);
         categoryViewHolder.recyclerView.setAdapter(adapter);
         categoryViewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
     }

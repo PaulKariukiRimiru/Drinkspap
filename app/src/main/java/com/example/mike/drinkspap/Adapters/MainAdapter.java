@@ -6,7 +6,8 @@ import android.view.ViewGroup;
 
 import com.example.mike.drinkspap.Delegates.CategoriesDelegate;
 import com.example.mike.drinkspap.Delegates.DrinksDelegate;
-import com.example.mike.drinkspap.Delegates.MainDrinksDelegate;
+import com.example.mike.drinkspap.Delegates.DrinksTitleDelegate;
+import com.example.mike.drinkspap.Interfaces.NavigationInterface;
 import com.example.mike.drinkspap.Pojo.MainObject;
 import com.hannesdorfmann.adapterdelegates3.AdapterDelegatesManager;
 
@@ -21,12 +22,12 @@ public class MainAdapter extends RecyclerView.Adapter {
     AdapterDelegatesManager<List<MainObject>> manager;
     List<MainObject> mainObjects;
 
-    public MainAdapter(Context context, List<MainObject> mainObjects){
+    public MainAdapter(Context context, List<MainObject> mainObjects, NavigationInterface navigationInterface){
         this.mainObjects = mainObjects;
         manager = new AdapterDelegatesManager<>();
-        manager.addDelegate(new CategoriesDelegate(context));
-        manager.addDelegate(new DrinksDelegate(context));
-        manager.addDelegate(new MainDrinksDelegate(context));
+        //manager.addDelegate(new CategoriesDelegate(context, navigationInterface));
+        manager.addDelegate(new DrinksDelegate(context, navigationInterface));
+        manager.addDelegate(new DrinksTitleDelegate(context, navigationInterface));
     }
 
     @Override

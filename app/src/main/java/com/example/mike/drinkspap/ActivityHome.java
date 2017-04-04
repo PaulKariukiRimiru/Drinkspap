@@ -24,13 +24,14 @@ import android.view.View;
 import com.example.mike.drinkspap.Fragments.FavouritesFragment;
 import com.example.mike.drinkspap.Fragments.HomeFragment;
 import com.example.mike.drinkspap.Fragments.DeliveriesFragment;
+import com.example.mike.drinkspap.Interfaces.NavigationInterface;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ActivityHome extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ActivityHome extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     Fragment fragment;
     FragmentManager fragmentManager;
@@ -63,7 +64,7 @@ public class ActivityHome extends AppCompatActivity implements NavigationView.On
         final ViewPager pager = (ViewPager) findViewById(R.id.vp);
         navigationViewEx = (BottomNavigationViewEx) findViewById(R.id.bnve);
         pager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(),fragments));
-        navigationViewEx.setupWithViewPager(pager,true);
+        navigationViewEx.setupWithViewPager(pager);
 
         navigationViewEx.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             private int previousPosition = -1;
