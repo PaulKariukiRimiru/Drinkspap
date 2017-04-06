@@ -1,5 +1,6 @@
 package com.example.mike.drinkspap.Fragments;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -28,8 +29,10 @@ public class ProductFragment extends DialogFragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private String count;
     private String mParam2;
+
+    DataPassInterface dataPassInterface;
 
     public ProductFragment() {
         // Required empty public constructor
@@ -39,15 +42,15 @@ public class ProductFragment extends DialogFragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
+     * @param count Parameter 1.
      * @param param2 Parameter 2.
      * @return A new instance of fragment ProductFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProductFragment newInstance(String param1, String param2) {
+    public static ProductFragment newInstance(String count, String param2) {
         ProductFragment fragment = new ProductFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM1, count);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
@@ -57,7 +60,7 @@ public class ProductFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            count = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
@@ -72,6 +75,29 @@ public class ProductFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_product, container, false);
+        View view = inflater.inflate(R.layout.fragment_product, container, false);
+        Button button = (Button) view.findViewById(R.id.btnaddtocart);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                passData("string");
+            }
+        });
+        return view;
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        dataPassInterface = (DataPassInterface) context;
+    }
+
+    public interface DataPassInterface {
+        void passCount(String count);
+    }
+
+    public void passData(String data){
+        dataPassInterface.passCount(data);
+    }
+
 }

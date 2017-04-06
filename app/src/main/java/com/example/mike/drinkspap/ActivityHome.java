@@ -1,6 +1,8 @@
 package com.example.mike.drinkspap;
 
-import android.app.Instrumentation;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -8,7 +10,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -19,19 +20,20 @@ import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
+import com.example.mike.drinkspap.Custom.BadgeDrawable;
 import com.example.mike.drinkspap.Fragments.FavouritesFragment;
 import com.example.mike.drinkspap.Fragments.HomeFragment;
 import com.example.mike.drinkspap.Fragments.DeliveriesFragment;
-import com.example.mike.drinkspap.Interfaces.NavigationInterface;
+import com.example.mike.drinkspap.Fragments.ProductFragment;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.mikepenz.actionitembadge.library.ActionItemBadge;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ActivityHome extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class ActivityHome extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ProductFragment.DataPassInterface {
 
     Fragment fragment;
     FragmentManager fragmentManager;
@@ -43,7 +45,8 @@ public class ActivityHome extends AppCompatActivity implements NavigationView.On
     private List<Fragment> fragments = new ArrayList<>();// used for ViewPager adapter
 
     BottomNavigationViewEx navigationViewEx;
-
+    private int count = 0;
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +109,8 @@ public class ActivityHome extends AppCompatActivity implements NavigationView.On
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.test, menu);
-        return true;
+        this.menu = menu;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -148,6 +152,21 @@ public class ActivityHome extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    public void passCount(String count) {
+        this.count += 1;
+        MenuItem itemCart = menu.findItem(R.id.action_cart);
+        LayerDrawable icon = (LayerDrawable) itemCart.getIcon();
+        int badgeCount = this.count;
+        if (badgeCount > 0) {
+            ActionItemBadge.update(this, itemCart, icon , ActionItemBadge.BadgeStyles.GREY, badgeCount);
+        } else {
+            ActionItemBadge.hide(menu.findItem(R.id.action_cart));
+        }
+
+    }
+
 
     private class ViewPagerAdapter extends FragmentPagerAdapter{
 
