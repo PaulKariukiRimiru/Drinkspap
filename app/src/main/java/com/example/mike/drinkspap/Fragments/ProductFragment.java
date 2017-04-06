@@ -1,15 +1,24 @@
 package com.example.mike.drinkspap.Fragments;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 
+import com.example.mike.drinkspap.Custom.BadgeDrawable;
+import com.example.mike.drinkspap.Interfaces.NavigationInterface;
 import com.example.mike.drinkspap.R;
 
 public class ProductFragment extends DialogFragment {

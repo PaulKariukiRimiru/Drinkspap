@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.example.mike.drinkspap.Delegates.CategoriesDelegate;
+import com.example.mike.drinkspap.Delegates.DeliveriesDelegate;
 import com.example.mike.drinkspap.Delegates.DrinksDelegate;
 import com.example.mike.drinkspap.Delegates.DrinksTitleDelegate;
 import com.example.mike.drinkspap.Interfaces.NavigationInterface;
@@ -28,6 +29,7 @@ public class MainAdapter extends RecyclerView.Adapter {
         //manager.addDelegate(new CategoriesDelegate(context, navigationInterface));
         manager.addDelegate(new DrinksDelegate(context, navigationInterface));
         manager.addDelegate(new DrinksTitleDelegate(context, navigationInterface));
+        manager.addDelegate(new DeliveriesDelegate(context, navigationInterface));
     }
 
     @Override

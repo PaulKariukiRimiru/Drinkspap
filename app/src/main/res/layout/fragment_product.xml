@@ -39,7 +39,7 @@
                 android:orientation="vertical"
                 android:gravity="bottom"
                 >
-                <TextView
+                <com.example.mike.drinkspap.Custom.TextView_Lato
                     android:id="@+id/text11"
 
                     android:layout_width="fill_parent"
@@ -51,12 +51,12 @@
                     android:text="Test Drink Product " />
 
 
-                <TextView
+                <com.example.mike.drinkspap.Custom.Textview_lato_thin
                     android:id="@+id/text"
                     android:layout_marginTop="5dp"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18dp"
+                    android:textSize="15dp"
                     android:layout_gravity="bottom"
                     android:gravity="center_horizontal"
                     android:textColor="@color/colortext"
@@ -77,7 +77,7 @@
                     android:layout_marginBottom="25dp"
                     android:layout_marginTop="15dp">
                 <Button
-                    android:id="@+id/btnSimpleSnackbar"
+                    android:id="@+id/btnaddtocart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="ADD TO CART - ksh. 2000"

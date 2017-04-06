@@ -14,7 +14,7 @@
         <com.example.mike.drinkspap.Custom.SliderLayout
             android:id="@+id/slider"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             custom:pager_animation_span="1100"
             />
         <android.support.v7.widget.RecyclerView

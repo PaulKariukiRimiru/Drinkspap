@@ -1,5 +1,8 @@
 package com.example.mike.drinkspap.Fragments;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -18,6 +22,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.example.mike.drinkspap.Adapters.MainAdapter;
+import com.example.mike.drinkspap.Custom.BadgeDrawable;
 import com.example.mike.drinkspap.Custom.SliderLayout;
 import com.example.mike.drinkspap.Interfaces.NavigationInterface;
 import com.example.mike.drinkspap.Pojo.CategoryObject;
